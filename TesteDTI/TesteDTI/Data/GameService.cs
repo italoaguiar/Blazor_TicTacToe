@@ -44,7 +44,7 @@ namespace TesteDTI.Data
         /// Perform player movement
         /// </summary>
         /// <param name="m">The player movement</param>
-        public void MakeMovement(Movement m)
+        public GameResult MakeMovement(Movement m)
         {
             GameRoom gr = GameRooms.FirstOrDefault(x => x.Id == m.Id);
 
@@ -62,6 +62,40 @@ namespace TesteDTI.Data
             {
                 throw new InvalidOperationException("Posição não preenchida");
             }
+
+            //check if the player is on the correct turn
+            if (gr.FirstPlayer != m.Player)
+            {
+                throw new InvalidOperationException("Não é o turno do jogador");
+            }
+
+            //save movement on board
+            gr.Board[m.Position.X, y] = m;
+
+            gr.FirstPlayer = TogglePlayer(gr.FirstPlayer);
+
+
+            //Player O won
+            if (CheckWinner(gr, Player.O))
+            {
+                return new GameResult()
+                {
+                    IsEnded = true,
+                    Winner = Player.O
+                };
+            }
+
+            //Player X won
+            if (CheckWinner(gr, Player.X))
+            {
+                return new GameResult()
+                {
+                    IsEnded = true,
+                    Winner = Player.O
+                };
+            }
+
+            return new GameResult();
         }
 
 
@@ -105,6 +139,16 @@ namespace TesteDTI.Data
                 return true;
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns the inverse of the entered value
+        /// </summary>
+        /// <param name="p">The Player</param>
+        /// <returns>Inverted Player Value</returns>
+        private Player TogglePlayer(Player p)
+        {
+            return p == Player.X ? Player.O : Player.X;
         }
     }
 }
