@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace TesteDTI.Models
 {
-    public class Movement : BoardCell
+    public class BoardCell
     {
-        public Guid Id { get; set; }
+        public Player Player { get; set; }
+
+        public Position Position { get; set; }
     }
 }

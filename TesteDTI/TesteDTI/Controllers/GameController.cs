@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TesteDTI.Controllers
 {
+    [Route("/[controller]")]
     public class GameController : Controller
     {
+        [HttpPost]
         public IActionResult Index()
         {
             return View();
