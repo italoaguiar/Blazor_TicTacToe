@@ -6,14 +6,23 @@ using TesteDTI.Models;
 
 namespace TesteDTI.Data
 {
+    /// <summary>
+    /// Control all game rooms
+    /// </summary>
     public class GameService
     {
+        /// <summary>
+        /// List of all game rooms
+        /// </summary>
         public IList<GameRoom> GameRooms { get; private set; }
 
 
         private static Random random = new Random();
 
-
+        /// <summary>
+        /// Create a new game
+        /// </summary>
+        /// <returns>Object representing the created game</returns>
         public GameRoom NewGame()
         {
             GameRoom gr = new GameRoom()
@@ -28,6 +37,13 @@ namespace TesteDTI.Data
         }
 
 
+
+
+
+        /// <summary>
+        /// Perform player movement
+        /// </summary>
+        /// <param name="m">The player movement</param>
         public void MakeMovement(Movement m)
         {
             GameRoom gr = GameRooms.FirstOrDefault(x => x.Id == m.Id);
@@ -48,6 +64,15 @@ namespace TesteDTI.Data
             }
         }
 
+
+
+
+        /// <summary>
+        /// Analyze the game board looking for a winner
+        /// </summary>
+        /// <param name="gr">The game room</param>
+        /// <param name="p">The Player</param>
+        /// <returns>Value indicating whether the informed player won the game.</returns>
         private bool CheckWinner(GameRoom gr, Player p)
         {
             int v = 0, h = 0;
@@ -73,7 +98,7 @@ namespace TesteDTI.Data
             {
                 if (gr.Board[i, i].Player == p)
                     v++;
-                if (gr.Board[(i * -1) + 2, (i * -1) + 2].Player == p)
+                if (gr.Board[i, (i * -1) + 2].Player == p)
                     h++;
             }
             if (v == 2 || h == 2)
