@@ -11,6 +11,12 @@ namespace TesteDTI.Data
     /// </summary>
     public class GameService
     {
+
+        public GameService()
+        {
+            GameRooms = new List<GameRoom>();
+        }
+
         /// <summary>
         /// List of all game rooms
         /// </summary>
@@ -74,28 +80,13 @@ namespace TesteDTI.Data
 
             gr.FirstPlayer = TogglePlayer(gr.FirstPlayer);
 
-
-            //Player O won
-            if (CheckWinner(gr, Player.O))
+            var result = CheckWinner(gr);
+            
+            return new GameResult()
             {
-                return new GameResult()
-                {
-                    IsEnded = true,
-                    Winner = Player.O
-                };
-            }
-
-            //Player X won
-            if (CheckWinner(gr, Player.X))
-            {
-                return new GameResult()
-                {
-                    IsEnded = true,
-                    Winner = Player.O
-                };
-            }
-
-            return new GameResult();
+                IsEnded = result != null,
+                Winner = result
+            };
         }
 
 
@@ -105,40 +96,70 @@ namespace TesteDTI.Data
         /// Analyze the game board looking for a winner
         /// </summary>
         /// <param name="gr">The game room</param>
-        /// <param name="p">The Player</param>
         /// <returns>Value indicating whether the informed player won the game.</returns>
-        private bool CheckWinner(GameRoom gr, Player p)
+        private Player? CheckWinner(GameRoom gr)
         {
-            int v = 0, h = 0;
+            int vO = 0, hO = 0, vX = 0, hX = 0, d = 0;
 
             //check horizontal and vertical coordinates
             for (int i = 0; i< 2; i++)
             {
                 for(int j = 0; j< 2; j++)
                 {
-                    if (gr.Board[i, j].Player == p)
-                        v++;
-                    if (gr.Board[j, i].Player == p)
-                        v++;
+                    if (gr.Board[i, j] != null)
+                    {
+                        if (gr.Board[i, j].Player == Player.O)
+                            vO++;                        
+                        else if (gr.Board[i, j].Player == Player.X)
+                            vX++;                        
+                        d++;
+                    }
+                    else if (gr.Board[j, i] != null)
+                    {
+                        if (gr.Board[j, i].Player == Player.O)
+                            hO++;
+                        else if (gr.Board[j, i].Player == Player.X)
+                            hX++;
+                    }
                 }
-                if (v == 2 || h == 2)
-                    return true;
+                if (vX == 2 || hX == 2)
+                    return Player.X;
 
-                v = h = 0;
+                if (vO == 2 || hO == 2)
+                    return Player.O;
+                
+                vX = hX = vO = hO = 0; //clear
             }
+
+            if (d == 9)
+                return Player.Draw;
 
             //check diagonal coordinates
             for(int i = 0; i< 2; i++)
             {
-                if (gr.Board[i, i].Player == p)
-                    v++;
-                if (gr.Board[i, (i * -1) + 2].Player == p)
-                    h++;
+                if (gr.Board[i, i] != null)
+                {
+                    if (gr.Board[i, i].Player == Player.O)
+                        vO++;                    
+                    else if (gr.Board[i, i].Player == Player.X)
+                        vX++;
+                    
+                }
+                else if(gr.Board[i, (i * -1) + 2] != null)
+                {
+                    if (gr.Board[i, (i * -1) + 2].Player == Player.X)
+                        hX++;
+                    else if (gr.Board[i, (i * -1) + 2].Player == Player.O)
+                        hO++;
+                }
             }
-            if (v == 2 || h == 2)
-                return true;
+            if (vX == 3 || hX == 3)
+                return Player.X;
 
-            return false;
+            if (vO == 3 || hO == 3)
+                return Player.O;
+
+            return null;
         }
 
         /// <summary>

@@ -18,6 +18,6 @@ namespace TesteDTI.Models
         /// <summary>
         /// Determines the winner of the game.
         /// </summary>
-        public Player Winner { get; set; }
+        public Player? Winner { get; set; }
     }
 }
