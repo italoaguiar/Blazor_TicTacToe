@@ -141,9 +141,10 @@
         result = null;
 
         gameServiceInstance.OnChange += () =>
-        {
-            InvokeAsync(StateHasChanged);
+        {            
             player = gameServiceInstance[GameId].FirstPlayer;
+            result = gameServiceInstance[GameId]?.GameResult;
+            InvokeAsync(StateHasChanged);
         };
     }
 
@@ -155,9 +156,10 @@
         result = null;
 
         gameServiceInstance.OnChange += () =>
-        {
-            InvokeAsync(StateHasChanged);
+        {            
             player = gameServiceInstance[GameId].FirstPlayer;
+            result = gameServiceInstance[GameId]?.GameResult;
+            InvokeAsync(StateHasChanged);
         };
     }
 

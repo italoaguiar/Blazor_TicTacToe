@@ -99,13 +99,16 @@ namespace TesteDTI.Data
 
             var result = CheckWinner(gr);
 
-            NotifyDataChanged(); //Notify changes to UI
-
-            return new GameResult()
+            var g = new GameResult()
             {
                 IsEnded = result != null,
                 Winner = result
             };
+            gr.GameResult = g;
+
+            NotifyDataChanged(); //Notify changes to UI
+
+            return g;
         }
 
 

@@ -38,5 +38,11 @@ namespace TesteDTI.Models
         /// </summary>
         [JsonIgnore]
         public BoardCell[,] Board { get; set; }
+
+        /// <summary>
+        /// The result of game
+        /// </summary>
+        [JsonIgnore]
+        public GameResult GameResult { get; set; }
     }
 }
