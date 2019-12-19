@@ -4,6 +4,11 @@
         <name>TesteDTI</name>
     </assembly>
     <members>
+        <member name="T:TesteDTI.Controllers.GameController">
+            <summary>
+            Game Controller
+            </summary>
+        </member>
         <member name="M:TesteDTI.Controllers.GameController.#ctor(TesteDTI.Data.GameService)">
             <summary>
             Initialize the controller
@@ -35,6 +40,13 @@
             List of all game rooms
             </summary>
         </member>
+        <member name="P:TesteDTI.Data.GameService.Item(System.String)">
+            <summary>
+            Enable GameRoom object access as in a dictionary
+            </summary>
+            <param name="id">Game room Id</param>
+            <returns>GameRoom with entered Id</returns>
+        </member>
         <member name="M:TesteDTI.Data.GameService.NewGame">
             <summary>
             Create a new game
@@ -60,6 +72,11 @@
             </summary>
             <param name="p">The Player</param>
             <returns>Inverted Player Value</returns>
+        </member>
+        <member name="E:TesteDTI.Data.GameService.OnChange">
+            <summary>
+            Notifies state change for UI elements.
+            </summary>
         </member>
         <member name="T:TesteDTI.Models.BoardCell">
             <summary>
@@ -166,6 +183,36 @@
             <summary>
             Represents the Y coordinate of the board cell
             </summary>
+        </member>
+        <member name="T:TesteDTI.Startup">
+            <summary>
+            Configures application startup.
+            </summary>
+        </member>
+        <member name="M:TesteDTI.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">Configuration Interface</param>
+        </member>
+        <member name="P:TesteDTI.Startup.Configuration">
+            <summary>
+            Configuration Interface
+            </summary>
+        </member>
+        <member name="M:TesteDTI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+            </summary>
+            <param name="services">Services Interface</param>
+        </member>
+        <member name="M:TesteDTI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">ApplicationBuilder Interface</param>
+            <param name="env">WebHostEnviroment Interface</param>
         </member>
     </members>
 </doc>

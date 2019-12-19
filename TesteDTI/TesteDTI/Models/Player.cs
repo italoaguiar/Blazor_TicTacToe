@@ -11,8 +11,19 @@ namespace TesteDTI.Models
     /// </summary>
     public enum Player
     {
+        /// <summary>
+        /// The X Player
+        /// </summary>
         X,
+
+        /// <summary>
+        /// The O Player
+        /// </summary>
         O,
+
+        /// <summary>
+        /// No Players
+        /// </summary>
         Draw
     }
 }
