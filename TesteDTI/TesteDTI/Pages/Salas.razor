@@ -1,0 +1,41 @@
+﻿@page "/salas"
+@inject GameService gameServiceInstance;
+
+
+
+<h3>Salas de jogos disponíveis</h3>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Opções</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in gameServiceInstance.GameRooms)
+        {
+            <tr>
+                <th scope="row">@item.Id.ToString()</th>
+                <td>
+                    <a href="partida/@item.Id.ToString()">
+                        Entrar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code { 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        gameServiceInstance.OnChange += () =>
+        {
+            InvokeAsync(StateHasChanged);
+        };
+    }
+}

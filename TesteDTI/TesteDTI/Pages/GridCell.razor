@@ -3,29 +3,31 @@
 <svg width="300" height="300"
      @onmouseover="OnMouseOver"
      @onmouseout="OnMouseOut"
-     @onclick="OnClick"
+     @onclick="OnClick" style="cursor:@cursor;"
      xmlns="http://www.w3.org/2000/svg">
-    <rect style="cursor:@cursor;"
-          x="@X"
-          y="@Y"
-          width="@Width"
-          height="@Height"
+    <rect
+          x="@(X + 3)"
+          y="@(Y + 3)"
+          rx="15"
+          ry="15"
+          width="@(Width - 6)"
+          height="@(Height - 6)"
           fill="@fillColor"
-          stroke="black"
-          stroke-width="1" />
+          stroke="#0b4d7d"
+          stroke-width="3" />
 
     @if (CellData != null && CellData.Player == Models.Player.X)
     {
-        <svg width="@Width" height="@Width" x="@X" y="@Y" viewBox="0 0 32 32">
+        <svg width="@Width" height="@Height" x="@X" y="@Y" viewBox="-3 -3 37 37" >
             <path fill="#d15347" fill-opacity="1" stroke-width="0.32" stroke-linejoin="round" d="M 3.55492,26.1823L 13.7373,16L 3.55493,5.81766L 5.81767,3.55492L 16,13.7373L 26.1823,3.55492L 28.4451,5.81766L 18.2627,16L 28.4451,26.1823L 26.1823,28.4451L 16,18.2627L 5.81766,28.4451L 3.55492,26.1823 Z " />
         </svg>
     }
     else @if (CellData != null && CellData.Player == Models.Player.O)
-{
-<svg width="@Width" height="@Width" x="@X" y="@Y" viewBox="0 0 32 32">
-    <path fill="#1967AC" fill-opacity="1" stroke-width="0.32" stroke-linejoin="round" d="M 16,1.36001C 24.0854,1.36001 30.64,7.91457 30.64,16C 30.64,24.0855 24.0854,30.64 16,30.64C 7.91455,30.64 1.36,24.0855 1.36,16C 1.36,7.91456 7.91455,1.36001 16,1.36001 Z M 16,3.94002C 9.33944,3.94002 3.94,9.33946 3.94,16C 3.94,22.6606 9.33944,28.06 16,28.06C 22.6605,28.06 28.06,22.6606 28.06,16C 28.06,9.33946 22.6605,3.94002 16,3.94002 Z " />
-</svg>
-}
+    {
+    <svg width="@Width" height="@Height" x="@X" y="@Y" viewBox="-3 -3 37 37" >
+        <path fill="#1967AC" fill-opacity="1" stroke-width="0.32" stroke-linejoin="round" d="M 16,1.36001C 24.0854,1.36001 30.64,7.91457 30.64,16C 30.64,24.0855 24.0854,30.64 16,30.64C 7.91455,30.64 1.36,24.0855 1.36,16C 1.36,7.91456 7.91455,1.36001 16,1.36001 Z M 16,3.94002C 9.33944,3.94002 3.94,9.33946 3.94,16C 3.94,22.6606 9.33944,28.06 16,28.06C 22.6605,28.06 28.06,22.6606 28.06,16C 28.06,9.33946 22.6605,3.94002 16,3.94002 Z " />
+    </svg>
+    }
 </svg>
 
 @code{
@@ -33,9 +35,7 @@
     [Parameter] public int Height { get; set; }
     [Parameter] public int X { get; set; }
     [Parameter] public int Y { get; set; }
-    [Parameter] public bool IsEmpty { get; set; } = true;
     [Parameter] public BoardCell CellData { get; set; }
-    [Parameter] public Guid GameId { get; set; }
 
     [Parameter] public int J { get; set; }
     [Parameter] public int K { get; set; }
@@ -43,27 +43,28 @@
     [Parameter]
     public Action<GridCellEventArgs> Click { get; set; }
 
-    string fillColor = "white";
+    string fillColor = "#a9d4f5";
     string cursor = "arrow";
 
     private void OnMouseOver(MouseEventArgs e)
     {
-        fillColor = "#c5dde8";
+        fillColor = "#5aa0d6";
 
-        if (!IsEmpty)
+        if (CellData != null)
             cursor = "not-allowed";
         else
             cursor = "arrow";
     }
     private void OnMouseOut(MouseEventArgs e)
     {
-        fillColor = "white";
+        fillColor = "#a9d4f5";
         cursor = "arrow";
     }
 
     private void OnClick(MouseEventArgs e)
     {
-        OnClick(new Position { X = J, Y = K });
+        if(CellData == null)
+            OnClick(new Position { X = J, Y = K });
     }
 
 

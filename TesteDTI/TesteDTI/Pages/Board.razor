@@ -1,95 +1,164 @@
 ﻿@using TesteDTI.Pages;
 @inject GameService gameServiceInstance;
 
-<div class="row">
-    @if(player == Player.X)
-    {
-        <h2>É a vez do jogador X</h2>
-    }
-    else if(player == Player.O)
-    {
-        <h2>É a vez do jogador O</h2>
-    }
-</div>
-
+<span style="color:#545454;font-size:8pt;">Jogo #@GameId</span>
 <div class="row">
     <div class="col">
         <div class="mx-auto text-center">
-            <svg width="300" height="300"
-                 viewBox="0 0 300 300"
-                 xmlns="http://www.w3.org/2000/svg">
-
-                <GridCell Width="100" Height="100" X="0" Y="0" CellData="@board[0,0]" GameId="@gameId" J="0" K="2" Click="@OnCellClick" />
-                <GridCell Width="100" Height="100" X="0" Y="100" CellData="@board[0,1]" GameId="@gameId" J="0" K="1" Click="@OnCellClick" />
-                <GridCell Width="100" Height="100" X="0" Y="200" CellData="@board[0,2]" GameId="@gameId" J="0" K="0" Click="@OnCellClick" />
-
-                <GridCell Width="100" Height="100" X="100" Y="0" CellData="@board[1,0]" GameId="@gameId" J="1" K="2" Click="@OnCellClick" />
-                <GridCell Width="100" Height="100" X="100" Y="100" CellData="@board[1,1]" GameId="@gameId" J="1" K="1" Click="@OnCellClick" />
-                <GridCell Width="100" Height="100" X="100" Y="200" CellData="@board[1,2]" GameId="@gameId" J="1" K="0" Click="@OnCellClick" />
-
-                <GridCell Width="100" Height="100" X="200" Y="0" CellData="@board[2,0]" GameId="@gameId" J="2" K="2" Click="@OnCellClick" />
-                <GridCell Width="100" Height="100" X="200" Y="100" CellData="@board[2,1]" GameId="@gameId" J="2" K="1" Click="@OnCellClick" />
-                <GridCell Width="100" Height="100" X="200" Y="200" CellData="@board[2,2]" GameId="@gameId" J="2" K="0" Click="@OnCellClick" />
-            </svg>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="mx-auto text-center">
-            @if (result != null && result.IsEnded)
+            @if (result == null || !result.IsEnded)
             {
-                if (result.Winner == Player.Draw)
+                @if (player == Player.X)
                 {
-                    <h2>Deu velha!</h2>
+                    <div class="alert alert-primary" role="alert">
+                        É a vez do jogador X
+                    </div>
+                }
+                else if (player == Player.O)
+                {
+                    <div class="alert alert-primary" role="alert">
+                        É a vez do jogador O
+                    </div>
+                }
+            }
+            else
+            {
+                @if (result.Winner == Player.Draw)
+                {
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Deu Velha!!!
+                    </div>
                 }
                 else
                 {
-                    <h2>O jogador @result.Winner venceu!!!</h2>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        O jogador @result.Winner venceu!!!
+                    </div>
                 }
             }
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col">
+        <div class="mx-auto text-center">
+            <svg width="340" height="340"
+                 viewBox="0 0 340 340"
+                 xmlns="http://www.w3.org/2000/svg">
+                <rect x="10"
+                      y="10"
+                      rx="15"
+                      ry="15"
+                      width="320"
+                      height="320"
+                      fill="#0b619e"
+                      stroke="#074069"
+                      stroke-width="3" />
+                <svg width="300" height="300"
+                     viewBox="0 0 300 300" x="20" y="20"
+                     xmlns="http://www.w3.org/2000/svg">
+
+                    <GridCell Width="100" Height="100" X="0" Y="0" CellData="@board[0,0]" J="0" K="2" Click="@OnCellClick" />
+                    <GridCell Width="100" Height="100" X="0" Y="100" CellData="@board[0,1]" J="0" K="1" Click="@OnCellClick" />
+                    <GridCell Width="100" Height="100" X="0" Y="200" CellData="@board[0,2]" J="0" K="0" Click="@OnCellClick" />
+
+                    <GridCell Width="100" Height="100" X="100" Y="0" CellData="@board[1,0]" J="1" K="2" Click="@OnCellClick" />
+                    <GridCell Width="100" Height="100" X="100" Y="100" CellData="@board[1,1]" J="1" K="1" Click="@OnCellClick" />
+                    <GridCell Width="100" Height="100" X="100" Y="200" CellData="@board[1,2]" J="1" K="0" Click="@OnCellClick" />
+
+                    <GridCell Width="100" Height="100" X="200" Y="0" CellData="@board[2,0]" J="2" K="2" Click="@OnCellClick" />
+                    <GridCell Width="100" Height="100" X="200" Y="100" CellData="@board[2,1]" J="2" K="1" Click="@OnCellClick" />
+                    <GridCell Width="100" Height="100" X="200" Y="200" CellData="@board[2,2]" J="2" K="0" Click="@OnCellClick" />
+                </svg>
+            </svg>
+        </div>
+    </div>
+</div>
+@if (result != null && result.IsEnded)
+{
+    <div class="row">
+        <div class="col">
+            <div class="mx-auto text-center">
+                <button type="button" class="btn btn-primary" @onclick="NewGame">Começar uma nova partida</button>
+            </div>
+        </div>
+    </div>
+}
+@if (error != null)
+{
+    <div class="row">
+        <div class="col">
+            <div class="mx-auto text-center">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @error
+                </div>
+            </div>
+        </div>
+    </div>
+}
 @code{
 
+
+    [Parameter] public string GameId { get; set; }
+
     BoardCell[,] board;
-    Guid gameId;
-
     Player player;
-
     GameResult result;
+    string error;
 
     protected override void OnInitialized()
     {
-        var game = gameServiceInstance.NewGame();
-        gameId = game.Id;
-        board = game.Board;
-        player = game.FirstPlayer;
-
-        gameServiceInstance.OnChange += () =>
-        {
-            InvokeAsync(StateHasChanged);
-            player = gameServiceInstance[gameId.ToString()].FirstPlayer;
-        };
-
+        if (GameId == null)
+            NewGame();
+        else
+            LoadGame();
     }
 
     private void OnCellClick(GridCellEventArgs e)
     {
         try
         {
-            result = gameServiceInstance.MakeMovement(new Movement()
-            {
-                Player = (Player)player,
-                Position = e.Position,
-                Id = gameId
-            });
+            if (result == null || !result.IsEnded)
+                result = gameServiceInstance.MakeMovement(new Movement()
+                {
+                    Player = (Player)player,
+                    Position = e.Position,
+                    Id = new Guid(GameId)
+                });
         }
-        catch
+        catch(Exception ex)
         {
-
+            error = ex.Message;
         }
+    }
+
+    private void NewGame()
+    {
+        var game = gameServiceInstance.NewGame();
+        GameId = game.Id.ToString();
+        board = game.Board;
+        player = game.FirstPlayer;
+        result = null;
+
+        gameServiceInstance.OnChange += () =>
+        {
+            InvokeAsync(StateHasChanged);
+            player = gameServiceInstance[GameId].FirstPlayer;
+        };
+    }
+
+    private void LoadGame()
+    {
+        var game = gameServiceInstance[GameId];
+        board = game.Board;
+        player = game.FirstPlayer;
+        result = null;
+
+        gameServiceInstance.OnChange += () =>
+        {
+            InvokeAsync(StateHasChanged);
+            player = gameServiceInstance[GameId].FirstPlayer;
+        };
     }
 
 }

@@ -54,6 +54,8 @@ namespace TesteDTI.Data
 
             GameRooms.Add(gr);
 
+            NotifyDataChanged();
+
             return gr;
         }
 
