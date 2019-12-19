@@ -1,0 +1,55 @@
+﻿@using TesteDTI.Pages;
+
+<a href="javascript:void(0)" class="btn" @onclick="Player1Click">Sou o Player X</a>
+<a href="javascript:void(0)" class="btn" @onclick="Player2Click">Sou o Player O</a>
+
+@inject GameService gameServiceInstance;
+
+    <svg width="300" height="300"
+         viewBox="0 0 300 300"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <GridCell Width="100" Height="100" X="0" Y="0" CellData="@board[0,0]" GameId="@gameId" J="0" K="2" Player="@player"/>
+        <GridCell Width="100" Height="100" X="0" Y="100"  CellData="@board[0,1]" GameId="@gameId" J="0" K="1" Player="@player"/>
+        <GridCell Width="100" Height="100" X="0" Y="200" CellData="@board[0,2]" GameId="@gameId" J="0" K="0" Player="@player"/>
+
+        <GridCell Width="100" Height="100" X="100" Y="0" CellData="@board[1,0]" GameId="@gameId" J="1" K="2" Player="@player"/>
+        <GridCell Width="100" Height="100" X="100" Y="100" CellData="@board[1,1]" GameId="@gameId" J="1" K="1" Player="@player"/>
+        <GridCell Width="100" Height="100" X="100" Y="200" CellData="@board[1,2]" GameId="@gameId" J="1" K="0" Player="@player"/>
+
+        <GridCell Width="100" Height="100" X="200" Y="0" CellData="@board[2,0]" GameId="@gameId" J="2" K="2" Player="@player"/>
+        <GridCell Width="100" Height="100" X="200" Y="100" CellData="@board[2,1]" GameId="@gameId" J="2" K="1" Player="@player"/>
+        <GridCell Width="100" Height="100" X="200" Y="200" CellData="@board[2,2]" GameId="@gameId" J="2" K="0" Player="@player"/>
+    </svg>
+
+@code{
+
+    BoardCell[,] board;
+    Guid gameId;
+
+    Player? player;
+
+    protected override void OnInitialized()
+    {
+        var game =  gameServiceInstance.NewGame();
+        gameId = game.Id;
+        board = game.Board;
+
+        gameServiceInstance.OnChange += () =>
+        {
+            InvokeAsync(StateHasChanged);
+        };
+
+    }
+
+    private void Player1Click(MouseEventArgs e)
+    {
+        player = Player.X;
+    }
+
+    private void Player2Click(MouseEventArgs e)
+    {
+        player = Player.O;
+    }
+
+}

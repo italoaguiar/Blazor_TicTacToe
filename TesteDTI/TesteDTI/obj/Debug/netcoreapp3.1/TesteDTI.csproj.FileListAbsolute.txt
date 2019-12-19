@@ -116,3 +116,7 @@ C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\Razo
 C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\TesteDTI.Views.pdb
 C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\TesteDTI.dll
 C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\TesteDTI.pdb
+C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Board.razor.g.cs
+C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\GridCell.razor.g.cs
+C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\Razor\Pages\Board.razor.g.cs
+C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\obj\Debug\netcoreapp3.1\Razor\Pages\GridCell.razor.g.cs

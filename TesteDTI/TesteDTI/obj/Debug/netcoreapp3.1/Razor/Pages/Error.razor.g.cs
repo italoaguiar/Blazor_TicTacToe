@@ -72,6 +72,20 @@ using TesteDTI.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 10 "C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\_Imports.razor"
+using TesteDTI.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\italo\source\repos\Teste\TesteDTI\TesteDTI\_Imports.razor"
+using TesteDTI.Data;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/error")]
     public partial class Error : Microsoft.AspNetCore.Components.ComponentBase
     {

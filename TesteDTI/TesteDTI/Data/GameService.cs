@@ -17,13 +17,28 @@ namespace TesteDTI.Data
             GameRooms = new List<GameRoom>();
         }
 
+        private IList<GameRoom> gameRooms;
+        private static Random random = new Random();
+
         /// <summary>
         /// List of all game rooms
         /// </summary>
-        public IList<GameRoom> GameRooms { get; private set; }
+        public IList<GameRoom> GameRooms
+        {
+            get => gameRooms;
+            set
+            {
+                gameRooms = value;
+                NotifyDataChanged();
+            }
+        }
 
 
-        private static Random random = new Random();
+        //enable access as in a dictionary
+        public GameRoom this[string id] => 
+            GameRooms.FirstOrDefault(x=> x.Id.ToString() == id);
+
+
 
         /// <summary>
         /// Create a new game
@@ -77,6 +92,8 @@ namespace TesteDTI.Data
 
             //save movement on board
             gr.Board[m.Position.X, y] = m;
+
+            NotifyDataChanged();
 
             gr.FirstPlayer = TogglePlayer(gr.FirstPlayer);
 
@@ -171,5 +188,10 @@ namespace TesteDTI.Data
         {
             return p == Player.X ? Player.O : Player.X;
         }
+
+
+        public event Action OnChange;
+
+        private void NotifyDataChanged() => OnChange?.Invoke();
     }
 }
