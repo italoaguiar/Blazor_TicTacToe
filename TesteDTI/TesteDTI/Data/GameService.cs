@@ -29,7 +29,7 @@ namespace TesteDTI.Data
             set
             {
                 gameRooms = value;
-                NotifyDataChanged();
+                NotifyDataChanged(); //Notify changes to UI
             }
         }
 
@@ -91,14 +91,14 @@ namespace TesteDTI.Data
             }
 
             //save movement on board
-            gr.Board[m.Position.X, y] = m;
-
-            NotifyDataChanged();
+            gr.Board[m.Position.X, y] = m;            
 
             gr.FirstPlayer = TogglePlayer(gr.FirstPlayer);
 
             var result = CheckWinner(gr);
-            
+
+            NotifyDataChanged(); //Notify changes to UI
+
             return new GameResult()
             {
                 IsEnded = result != null,
@@ -116,64 +116,64 @@ namespace TesteDTI.Data
         /// <returns>Value indicating whether the informed player won the game.</returns>
         private Player? CheckWinner(GameRoom gr)
         {
-            int vO = 0, hO = 0, vX = 0, hX = 0, d = 0;
+            int vertO = 0, horiO = 0, vertX = 0, horiX = 0, draw = 0;
 
             //check horizontal and vertical coordinates
-            for (int i = 0; i< 2; i++)
+            for (int i = 0; i< 3; i++)
             {
-                for(int j = 0; j< 2; j++)
+                for(int j = 0; j< 3; j++)
                 {
                     if (gr.Board[i, j] != null)
                     {
                         if (gr.Board[i, j].Player == Player.O)
-                            vO++;                        
+                            vertO++;                        
                         else if (gr.Board[i, j].Player == Player.X)
-                            vX++;                        
-                        d++;
+                            vertX++;                        
+                        draw++;
                     }
-                    else if (gr.Board[j, i] != null)
+                    if (gr.Board[j, i] != null)
                     {
                         if (gr.Board[j, i].Player == Player.O)
-                            hO++;
+                            horiO++;
                         else if (gr.Board[j, i].Player == Player.X)
-                            hX++;
+                            horiX++;
                     }
                 }
-                if (vX == 2 || hX == 2)
+                if (vertX == 3 || horiX == 3)
                     return Player.X;
 
-                if (vO == 2 || hO == 2)
+                if (vertO == 3 || horiO == 3)
                     return Player.O;
                 
-                vX = hX = vO = hO = 0; //clear
+                vertX = horiX = vertO = horiO = 0; //clear
             }
 
-            if (d == 9)
+            if (draw == 9)
                 return Player.Draw;
 
             //check diagonal coordinates
-            for(int i = 0; i< 2; i++)
+            for(int i = 0; i< 3; i++)
             {
                 if (gr.Board[i, i] != null)
                 {
                     if (gr.Board[i, i].Player == Player.O)
-                        vO++;                    
+                        vertO++;                    
                     else if (gr.Board[i, i].Player == Player.X)
-                        vX++;
+                        vertX++;
                     
                 }
-                else if(gr.Board[i, (i * -1) + 2] != null)
+                if(gr.Board[i, (i * -1) + 2] != null)
                 {
                     if (gr.Board[i, (i * -1) + 2].Player == Player.X)
-                        hX++;
+                        horiX++;
                     else if (gr.Board[i, (i * -1) + 2].Player == Player.O)
-                        hO++;
+                        horiO++;
                 }
             }
-            if (vX == 3 || hX == 3)
+            if (vertX == 3 || horiX == 3)
                 return Player.X;
 
-            if (vO == 3 || hO == 3)
+            if (vertO == 3 || horiO == 3)
                 return Player.O;
 
             return null;
