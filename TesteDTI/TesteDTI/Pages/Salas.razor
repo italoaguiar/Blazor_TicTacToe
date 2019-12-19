@@ -14,7 +14,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in gameServiceInstance.GameRooms)
+        @foreach (var item in gameServiceInstance.GameRooms
+            .Where(x=> x.GameResult == null || !x.GameResult.IsEnded))
         {
             <tr>
                 <th scope="row">@item.Id.ToString()</th>
