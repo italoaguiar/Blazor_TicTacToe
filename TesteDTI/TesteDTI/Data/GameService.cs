@@ -34,7 +34,11 @@ namespace TesteDTI.Data
         }
 
 
-        //enable access as in a dictionary
+        /// <summary>
+        /// Enable GameRoom object access as in a dictionary
+        /// </summary>
+        /// <param name="id">Game room Id</param>
+        /// <returns>GameRoom with entered Id</returns>
         public GameRoom this[string id] => 
             GameRooms.FirstOrDefault(x=> x.Id.ToString() == id);
 
@@ -194,7 +198,9 @@ namespace TesteDTI.Data
             return p == Player.X ? Player.O : Player.X;
         }
 
-
+        /// <summary>
+        /// Notifies state change for UI elements.
+        /// </summary>
         public event Action OnChange;
 
         private void NotifyDataChanged() => OnChange?.Invoke();

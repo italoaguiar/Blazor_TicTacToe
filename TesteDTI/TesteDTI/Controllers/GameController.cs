@@ -8,6 +8,9 @@ using TesteDTI.Models;
 
 namespace TesteDTI.Controllers
 {
+    /// <summary>
+    /// Game Controller
+    /// </summary>
     [Route("/[controller]")]
     public class GameController : Controller
     {
