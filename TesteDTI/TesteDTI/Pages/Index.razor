@@ -1,5 +1,125 @@
 ﻿@page "/"
+@inject NavigationManager navigationManager
+<h1>
+    Jogo da velha (Tic Tac Toe) em asp .net Core e Blazor
+</h1>
+<p>
+    O objetivo desta aplicação é criar uma API para o jogo da velha. A API tem suporte a múltiplas salas de jogo.
 
-<h1>Hello, world!</h1>
+    A aplicação também possui um frontend escrito com o framwork SPA Blazor para criar um tabuleiro com resposta em tempo real para os comandos da API.
+</p>
 
-Welcome to your new app.
+
+<h4>Faça um teste da API:</h4>
+
+
+<h5>Criar um novo jogo:</h5>
+<div class="row">
+    <div class="col">
+        <button @onclick="(e=> NewGame())" class="btn btn-primary">Criar novo jogo</button>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col">
+        <pre>@newgameResponse</pre>
+    </div>
+</div>
+<br />
+<h5>Fazer um movimento:</h5>
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label for="i1">Id do jogo</label>
+            <input class="form-control" id="i1" @bind-value="gameId">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label for="ta1">Corpo da requisição</label>
+            <input type="text" class="form-control" id="ta1" rows="3" @bind-value="bodyValue">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <button @onclick="(e=> MakeMovement())" class="btn btn-primary">Fazer Movimento</button>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col">
+        <pre>@movementResponse</pre>
+    </div>
+</div>
+
+@if (error != null)
+{
+    <div class="row">
+        <div class="col">
+            <div class="mx-auto text-center">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @error
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code{
+
+    string newgameResponse;
+    string movementResponse;
+    string gameId;
+    string bodyValue = "{\"id\":\"ID DO JOGO\",\"player\": \"x\",\"position\":{\"x\":2,\"y\":0}}";
+    string error;
+
+
+    private async void NewGame()
+    {
+        try
+        {
+            error = null;
+
+            HttpClient Http = new HttpClient();
+            var r = await Http.PostAsync($"{navigationManager.BaseUri}game", null);
+
+            newgameResponse = await r.Content.ReadAsStringAsync();
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch(Exception e)
+        {
+            error = e.Message;
+        }
+    }
+
+    private async void MakeMovement()
+    {
+        try
+        {
+            HttpClient Http = new HttpClient();
+            var r = await Http.PostAsync($"{navigationManager.BaseUri}game/{gameId}/movement",
+                new StringContent(bodyValue, System.Text.Encoding.UTF8, "application/json"));
+
+            movementResponse = await r.Content.ReadAsStringAsync();
+
+            if(r.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                movementResponse = "OK" + ": " + movementResponse;
+            }
+            else
+            {
+                movementResponse = r.ReasonPhrase + ": " + movementResponse;
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch(Exception e)
+        {
+            error = e.Message;
+        }
+    }
+}

@@ -34,6 +34,7 @@ namespace TesteDTI
             });
 
             services.AddRazorPages();
+            services.AddHttpClient();
             services.AddServerSideBlazor();
             services.AddSingleton<GameService>();
         }
