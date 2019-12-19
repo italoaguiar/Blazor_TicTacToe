@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TesteDTI</name>
+    </assembly>
+    <members>
+        <member name="M:TesteDTI.Controllers.GameController.#ctor(TesteDTI.Data.GameService)">
+            <summary>
+            Initialize the controller
+            </summary>
+            <param name="_service">GameService singleton instance</param>
+        </member>
+        <member name="M:TesteDTI.Controllers.GameController.Index">
+            <summary>
+            POST:/game
+            Generate a new game
+            </summary>
+            <returns>Object representing the created game</returns>
+        </member>
+        <member name="M:TesteDTI.Controllers.GameController.MakeMovement(System.Guid,TesteDTI.Models.Movement)">
+            <summary>
+            Performs user movement
+            </summary>
+            <param name="id">Game identifier</param>
+            <param name="m">Request Body</param>
+            <returns>Empty if game is in progress. Winner if finalized.</returns>
+        </member>
+        <member name="T:TesteDTI.Data.GameService">
+            <summary>
+            Control all game rooms
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Data.GameService.GameRooms">
+            <summary>
+            List of all game rooms
+            </summary>
+        </member>
+        <member name="M:TesteDTI.Data.GameService.NewGame">
+            <summary>
+            Create a new game
+            </summary>
+            <returns>Object representing the created game</returns>
+        </member>
+        <member name="M:TesteDTI.Data.GameService.MakeMovement(TesteDTI.Models.Movement)">
+            <summary>
+            Perform player movement
+            </summary>
+            <param name="m">The player movement</param>
+        </member>
+        <member name="M:TesteDTI.Data.GameService.CheckWinner(TesteDTI.Models.GameRoom)">
+            <summary>
+            Analyze the game board looking for a winner
+            </summary>
+            <param name="gr">The game room</param>
+            <returns>Value indicating whether the informed player won the game.</returns>
+        </member>
+        <member name="M:TesteDTI.Data.GameService.TogglePlayer(TesteDTI.Models.Player)">
+            <summary>
+            Returns the inverse of the entered value
+            </summary>
+            <param name="p">The Player</param>
+            <returns>Inverted Player Value</returns>
+        </member>
+        <member name="T:TesteDTI.Models.BoardCell">
+            <summary>
+            Represents a board cell
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.BoardCell.Player">
+            <summary>
+            Player who made the move
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.BoardCell.Position">
+            <summary>
+            Movement coordinate
+            </summary>
+        </member>
+        <member name="T:TesteDTI.Models.GameResult">
+            <summary>
+            Represents the partial or final result of the game.
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.GameResult.IsEnded">
+            <summary>
+            Determines if the game has ended
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.GameResult.Winner">
+            <summary>
+            Determines the winner of the game.
+            </summary>
+        </member>
+        <member name="T:TesteDTI.Models.GameRoom">
+            <summary>
+            Represents a tic-tac-toe game room
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.GameRoom.Id">
+            <summary>
+            Game Id
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.GameRoom.FirstPlayer">
+            <summary>
+            The player who will start the game
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.GameRoom.Board">
+            <summary>
+            Matrix representing the game board
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.GameRoom.GameResult">
+            <summary>
+            The result of game
+            </summary>
+        </member>
+        <member name="T:TesteDTI.Models.GridCellEventArgs">
+            <summary>
+            represents a parameter for board cell events
+            </summary>
+        </member>
+        <member name="M:TesteDTI.Models.GridCellEventArgs.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:TesteDTI.Models.GridCellEventArgs.#ctor(TesteDTI.Models.Position)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="p">Cell position</param>
+        </member>
+        <member name="P:TesteDTI.Models.GridCellEventArgs.Position">
+            <summary>
+            Represents the coordinate of a cell
+            </summary>
+        </member>
+        <member name="T:TesteDTI.Models.Movement">
+            <summary>
+            Represents a player move
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.Movement.Id">
+            <summary>
+            Game movement identifier
+            </summary>
+        </member>
+        <member name="T:TesteDTI.Models.Player">
+            <summary>
+            Represents a player
+            </summary>
+        </member>
+        <member name="T:TesteDTI.Models.Position">
+            <summary>
+            Represents game coordinates
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.Position.X">
+            <summary>
+            Represents the X coordinate of the board cell
+            </summary>
+        </member>
+        <member name="P:TesteDTI.Models.Position.Y">
+            <summary>
+            Represents the Y coordinate of the board cell
+            </summary>
+        </member>
+    </members>
+</doc>
