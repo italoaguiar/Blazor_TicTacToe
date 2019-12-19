@@ -49,7 +49,7 @@ namespace TesteDTI.Data
             GameRoom gr = new GameRoom()
             {
                 Id = Guid.NewGuid(),
-                FirstPlayer = (Player)random.Next(0, 1)
+                FirstPlayer = (Player)random.Next(0, 2)
             };
 
             GameRooms.Add(gr);
